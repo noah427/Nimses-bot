@@ -80,6 +80,13 @@ client.on('message', msg => {
            
        })
     }
+    if(msg.content.includes("get.nimses")){
+        if(msg.deletable){
+            msg.delete()
+
+        }
+        msg.reply("please use the share profile link instead which is in settings under share profile!")
+    }
 });
   
 client.login(process.env.TOKEN);
