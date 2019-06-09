@@ -85,7 +85,7 @@ client.on('message', msg => {
             msg.delete()
 
         }
-        msg.reply("please use the share profile link instead which is in settings under share profile!")
+        msg.reply("please use profile link instead, ?profile <nimses-username>")
     }
       if(msg.content.startsWith("?profile")){
       args = msg.content.split(" ");
