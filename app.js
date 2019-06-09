@@ -87,6 +87,10 @@ client.on('message', msg => {
         }
         msg.reply("please use the share profile link instead which is in settings under share profile!")
     }
+      if(msg.content.startsWith("?profile")){
+      args = msg.content.split(" ");
+      msg.channel.send(`https://web.nimses.com/profile/${args[1]}`);
+    }
 });
   
 client.login(process.env.TOKEN);
