@@ -92,7 +92,7 @@ client.on('message', msg => {
   }
   if (msg.content.startsWith("?posts")) {
     args = msg.content.split(" ");
-    nemsis.getUserPosts(args[1], function(posts) {
+    nemsis.getUserPosts(args[1].toLowerCase(), function(posts) {
       posts.items.forEach(function(post) {
         var embed = {
           title: "post",
