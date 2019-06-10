@@ -92,15 +92,10 @@ client.on('message', msg => {
   }
   if (msg.content.startsWith("?posts")) {
     args = msg.content.split(" ");
-    console.log("check")
-    nemsis.getUserPosts(args[1],function(posts){
-      console.log("chec")
-      console.log(args)
-      posts.items.forEach(function(post){
-        console.log("che")
+    nemsis.getUserPosts(args[1], function(posts) {
+      posts.items.forEach(function(post) {
         var embed = {
-          title: "user info",
-          description: "shows user info and stuff",
+          title: "post",
           color: 3447003,
           author: {
             name: "[REDACTED]#1227",
@@ -117,11 +112,11 @@ client.on('message', msg => {
           footer: {
             text: "©[REDACTED]#1227"
           }
-       }
-       msg.channel.sendEmbed(embed)
+        }
+        msg.channel.sendEmbed(embed)
+      })
     })
-    })
-    
+
   }
 });
 
