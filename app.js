@@ -16,7 +16,7 @@ client.on('ready', () => {
 
 client.on('message', msg => {
   if (msg.content.startsWith('?user')) {
-    args = msg.content.split(" ")
+    var args = msg.content.split(" ")
     if (!args[1] || /^\s*$/.test(args[1])) {
       msg.reply("please add username")
     } else {
@@ -74,7 +74,7 @@ client.on('message', msg => {
               text: "©[REDACTED]#1227"
             }
           }
-          msg.channel.sendEmbed(embed)
+          msg.channel.send({ embed: embed })
         }
         else {
           msg.channel.send("can't find that user")
@@ -90,7 +90,7 @@ client.on('message', msg => {
     msg.reply("please use profile link instead, ?profile <nimses-username>")
   }
   if (msg.content.startsWith("?profile")) {
-    args = msg.content.split(" ");
+    var args = msg.content.split(" ");
     if (!args[1] || /^\s*$/.test(args[1])) {
       msg.reply("please add username")
     } else {
@@ -98,7 +98,7 @@ client.on('message', msg => {
     }
   }
   if (msg.content.startsWith("?posts")) {
-    args = msg.content.split(" ");
+    var args = msg.content.split(" ");
     if (!args[1] || /^\s*$/.test(args[1])) {
       msg.reply("please add username")
     } else {
@@ -123,11 +123,23 @@ client.on('message', msg => {
               text: "©[REDACTED]#1227"
             }
           }
-          msg.channel.sendEmbed(embed)
+          msg.channel.send({ embed: embed })
         })
       })
     }
 
+  }
+  if(msg.content.startsWith("?warn")){
+    var args = msg.content.split(",")
+    var list = msg.guild.channels.find("name","warned-list")
+    var embed = new Discord.RichEmbed()
+      .setTitle("warning")
+      .setColor("#FF0000")
+      .setAuthor("[REDACTED]#1227")
+      .addField("warner: ",msg.author.tag)
+      .addField("The warned: ",msg.mentions.members.first())
+      .addField("The reason: ",args[2])
+    client.guilds.get(msg.guild.id).channels.get(list.id).send(embed)    
   }
 });
 
