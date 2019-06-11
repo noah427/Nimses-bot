@@ -17,68 +17,71 @@ client.on('ready', () => {
 client.on('message', msg => {
   if (msg.content.startsWith('?user')) {
     args = msg.content.split(" ")
-    nemsis.getUserInfo(args[1], function(user) {
-      if (user != 404) {
-        var embed = {
-          title: "user info",
-          description: "shows user info and stuff",
-          color: 3447003,
-          author: {
-            name: "[REDACTED]#1227"
-          },
-          fields: [
-            {
-              name: "username: ",
-              value: user.profile.nickName
+    if (!args[1] || /^\s*$/.test(args[1])) {
+      msg.reply("please add username")
+    } else {
+      nemsis.getUserInfo(args[1], function(user) {
+        if (user != 404) {
+          var embed = {
+            title: "user info",
+            description: "shows user info and stuff",
+            color: 3447003,
+            author: {
+              name: "[REDACTED]#1227"
             },
-            {
-              name: "avatar: ",
-              value: user.profile.avatar
+            image: {
+              url: user.profile.avatar
             },
-            {
-              name: "dominims: ",
-              value: user.profile.balanceDominims
-            },
-            {
-              name: "nims: ",
-              value: user.profile.balanceNims
-            },
-            {
-              name: "followers: ",
-              value: user.profile.followers
-            },
-            {
-              name: "following: ",
-              value: user.profile.following
-            },
-            {
-              name: "visitors: ",
-              value: user.profile.visitors
-            },
-            {
-              name: "level? (no idea what this means): ",
-              value: user.profile.level
-            },
-            {
-              name: "is an angel: ",
-              value: user.profile.isAngel
-            },
-            {
-              name: "is master: ",
-              value: user.profile.isMaster
-            },
-          ],
-          footer: {
-            text: "©[REDACTED]#1227"
+            fields: [
+              {
+                name: "username: ",
+                value: user.profile.nickName
+              },
+              {
+                name: "dominims: ",
+                value: user.profile.balanceDominims
+              },
+              {
+                name: "nims: ",
+                value: user.profile.balanceNims
+              },
+              {
+                name: "followers: ",
+                value: user.profile.followers
+              },
+              {
+                name: "following: ",
+                value: user.profile.following
+              },
+              {
+                name: "visitors: ",
+                value: user.profile.visitors
+              },
+              {
+                name: "level? (no idea what this means): ",
+                value: user.profile.level
+              },
+              {
+                name: "is an angel: ",
+                value: user.profile.isAngel
+              },
+              {
+                name: "is master: ",
+                value: user.profile.isMaster
+              },
+            ],
+            footer: {
+              text: "©[REDACTED]#1227"
+            }
           }
+          msg.channel.sendEmbed(embed)
         }
-        msg.channel.sendEmbed(embed)
-      }
-      else {
-        msg.channel.send("can't find that user")
-      }
+        else {
+          msg.channel.send("can't find that user")
+        }
 
-    })
+      })
+    }
   }
   if (msg.content.includes("get.nimses")) {
     if (msg.deletable) {
@@ -88,34 +91,42 @@ client.on('message', msg => {
   }
   if (msg.content.startsWith("?profile")) {
     args = msg.content.split(" ");
-    msg.channel.send(`https://web.nimses.com/profile/${args[1]}`);
+    if (!args[1] || /^\s*$/.test(args[1])) {
+      msg.reply("please add username")
+    } else {
+      msg.channel.send(`https://web.nimses.com/profile/${args[1]}`);
+    }
   }
   if (msg.content.startsWith("?posts")) {
     args = msg.content.split(" ");
-    nemsis.getUserPosts(args[1].toLowerCase(), function(posts) {
-      posts.items.forEach(function(post) {
-        var embed = {
-          title: "post",
-          color: 3447003,
-          author: {
-            name: "[REDACTED]#1227",
-          },
-          image: {
-            url: post.photo,
-          },
-          fields: [
-            {
-              name: "text",
-              value: post.text
+    if (!args[1] || /^\s*$/.test(args[1])) {
+      msg.reply("please add username")
+    } else {
+      nemsis.getUserPosts(args[1].toLowerCase(), function(posts) {
+        posts.items.forEach(function(post) {
+          var embed = {
+            title: "post",
+            color: 3447003,
+            author: {
+              name: "[REDACTED]#1227",
             },
-          ],
-          footer: {
-            text: "©[REDACTED]#1227"
+            image: {
+              url: post.photo,
+            },
+            fields: [
+              {
+                name: "text",
+                value: post.text
+              },
+            ],
+            footer: {
+              text: "©[REDACTED]#1227"
+            }
           }
-        }
-        msg.channel.sendEmbed(embed)
+          msg.channel.sendEmbed(embed)
+        })
       })
-    })
+    }
 
   }
 });
