@@ -166,7 +166,11 @@ client.on('message', msg => {
       .addField("warner: ",msg.author.tag)
       .addField("The warned: ",msg.mentions.members.first())
       .addField("The reason: ",args[2])
-    client.guilds.get(msg.guild.id).channels.get(list.id).send(embed)    
+      .addField("Link for context: ", msg.url)
+    client.guilds.get(msg.guild.id).channels.get(list.id).send(embed)
+    if(msg.deletable) {
+      msg.delete()
+    }   
   }
 });
 
