@@ -33,3 +33,18 @@ exports.getUserPosts = function(name,cb){
     
   });
 }
+
+exports.getUserLimits = function(name, cb){
+    request(`https://web.nimses.com/api/profile/${name}`, (error, response, body) => {
+        if (response.statusCode == 404) {
+            cb(404);
+        }
+        else {
+            var Userinfo = JSON.parse(body)
+            request(`https://web.nimses.com/api/profile/limits?id=${Userinfo.profile.id}`, (response,err,body) => {
+                var posts = JSON.parse(body)
+                cb(posts)
+            })
+        }
+    });
+}

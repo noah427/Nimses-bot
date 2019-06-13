@@ -1,10 +1,9 @@
 var nemsis = require('./api')
 const Discord = require('discord.js');
 const client = new Discord.Client();
-require('dotenv').config()
 var keepAlive = require('./keepalive');
 
-var useKeepAlive = process.env.USEKEEPALIVE;
+var useKeepAlive = true;
 
 if (useKeepAlive === "true") {
   keepAlive.run()
@@ -97,6 +96,35 @@ client.on('message', msg => {
       msg.channel.send(`https://web.nimses.com/profile/${args[1]}`);
     }
   }
+  if (msg.content.startsWith("?limits")) {
+    var args = msg.content.split(" ");
+    if (!args[1] || /^\s*$/.test(args[1])) {
+      msg.reply("please add username")
+    } else {
+      nemsis.getUserLimits(args[1].toLowerCase(), (limits) => {
+        var embed = {
+          color: 3447003,
+          author: {
+            name: "pikami#0050",
+          },
+          fields: [
+            {
+              name: "Nims used",
+              value: `${limits.amount}/${limits.limit}`
+            },
+            {
+              name: "Expiration",
+              value: `${limits.expiration}`.substring(0, 10)
+            },
+          ],
+          footer: {
+            text: "©[REDACTED]#1227"
+          }
+        }
+        msg.channel.send({ embed: embed })
+      });
+    }
+  }
   if (msg.content.startsWith("?posts")) {
     var args = msg.content.split(" ");
     if (!args[1] || /^\s*$/.test(args[1])) {
@@ -143,4 +171,4 @@ client.on('message', msg => {
   }
 });
 
-client.login(process.env.TOKEN);
+client.login("NTg4ODA3ODI5ODQ3Mjc3NTY5.XQKgTg.ytMHKN-L98b_AH8toJHS6wT4KyA");
