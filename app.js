@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 var keepAlive = require('./keepalive');
 
-var useKeepAlive = true;
+var useKeepAlive = process.env.USEKEEPALIVE;
 
 if (useKeepAlive === "true") {
   keepAlive.run()
@@ -16,71 +16,70 @@ client.on('ready', () => {
 client.on('message', msg => {
   if (msg.content.startsWith('?user')) {
     var args = msg.content.split(" ")
-    if (!args[1] || /^\s*$/.test(args[1])) {
-      msg.reply("please add username")
-    } else {
-      nemsis.getUserInfo(args[1], function(user) {
-        if (user != 404) {
-          var embed = {
-            title: "user info",
-            description: "shows user info and stuff",
-            color: 3447003,
-            author: {
-              name: "[REDACTED]#1227"
-            },
-            image: {
-              url: user.profile.avatar
-            },
-            fields: [
-              {
-                name: "username: ",
-                value: user.profile.nickName
-              },
-              {
-                name: "dominims: ",
-                value: user.profile.balanceDominims
-              },
-              {
-                name: "nims: ",
-                value: user.profile.balanceNims
-              },
-              {
-                name: "followers: ",
-                value: user.profile.followers
-              },
-              {
-                name: "following: ",
-                value: user.profile.following
-              },
-              {
-                name: "visitors: ",
-                value: user.profile.visitors
-              },
-              {
-                name: "level? (no idea what this means): ",
-                value: user.profile.level
-              },
-              {
-                name: "is an angel: ",
-                value: user.profile.isAngel
-              },
-              {
-                name: "is master: ",
-                value: user.profile.isMaster
-              },
-            ],
-            footer: {
-              text: "©[REDACTED]#1227"
-            }
-          }
-          msg.channel.send({ embed: embed })
-        }
-        else {
-          msg.channel.send("can't find that user")
-        }
+    var username = !args[1] || /^\s*$/.test(args[1])
+      ? msg.member.displayName
+      : args[1];
 
-      })
-    }
+    nemsis.getUserInfo(username, function(user) {
+      if (user != 404) {
+        var embed = {
+          title: "user info",
+          description: "shows user info and stuff",
+          color: 3447003,
+          author: {
+            name: "[REDACTED]#1227"
+          },
+          image: {
+            url: user.profile.avatar
+          },
+          fields: [
+            {
+              name: "username: ",
+              value: user.profile.nickName
+            },
+            {
+              name: "dominims: ",
+              value: user.profile.balanceDominims
+            },
+            {
+              name: "nims: ",
+              value: user.profile.balanceNims
+            },
+            {
+              name: "followers: ",
+              value: user.profile.followers
+            },
+            {
+              name: "following: ",
+              value: user.profile.following
+            },
+            {
+              name: "visitors: ",
+              value: user.profile.visitors
+            },
+            {
+              name: "level? (no idea what this means): ",
+              value: user.profile.level
+            },
+            {
+              name: "is an angel: ",
+              value: user.profile.isAngel
+            },
+            {
+              name: "is master: ",
+              value: user.profile.isMaster
+            },
+          ],
+          footer: {
+            text: "©[REDACTED]#1227"
+          }
+        }
+        msg.channel.send({ embed: embed })
+      }
+      else {
+        msg.channel.send("can't find that user")
+      }
+    })
   }
   if (msg.content.includes("get.nimses")) {
     if (msg.deletable) {
@@ -171,4 +170,4 @@ client.on('message', msg => {
   }
 });
 
-client.login("NTg4ODA3ODI5ODQ3Mjc3NTY5.XQKgTg.ytMHKN-L98b_AH8toJHS6wT4KyA");
+client.login(process.env.TOKEN);
