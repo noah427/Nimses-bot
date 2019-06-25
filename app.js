@@ -167,7 +167,11 @@ client.on('message', async msg => {
     ?user <username> : shows user info
     ?limit <username> : shows your nim spending limit and how much you have spent
     ?posts <username> : shows your posts
-    ?profile <username> : links your profile for easy nom4nom
+    ?profile <username> : links your profile for easy 
+    
+    -----------------
+    all of these ^ commands can be used without the username
+    if your nickname is your nimses username!
     `+"```")
   }
 });
