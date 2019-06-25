@@ -9,9 +9,7 @@ exports.clean = function (text) {
 }
 
 exports.nicknameOrArg = function(msg){
-    var args = msg.content.split(" ");
-    var username = utilities.nicknameOrArg(args)
-      ? msg.member.displayName
-      : args[1];
-    return username
+    if(!args[1] || /^\s*$/.test(args[1])){
+        return msg.author.displayName
+    } else return args[1]
 }
