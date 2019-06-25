@@ -162,6 +162,14 @@ client.on('message', async msg => {
       msg.channel.send(`\`ERROR\` \`\`\`xl\n${utilities.clean(err)}\n\`\`\``);
     }
   }
+  if(msg.content == "?help"){
+    msg.channel.send("```"+`
+    ?user <username> : shows user info
+    ?limit <username> : shows your nim spending limit and how much you have spent
+    ?posts <username> : shows your posts
+    ?profile <username> : links your profile for easy nom4nom
+    `+"```")
+  }
 });
 
 
