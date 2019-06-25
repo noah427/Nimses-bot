@@ -2,8 +2,9 @@ var nemsis = require('./api')
 const Discord = require('discord.js');
 const client = new Discord.Client();
 var keepAlive = require('./keepalive');
-
+const { inspect } = require('util');
 var useKeepAlive = process.env.USEKEEPALIVE;
+
 
 if (useKeepAlive === "true") {
   keepAlive.run()
@@ -13,7 +14,7 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', msg => {
+client.on('message', async msg => {
   if (msg.content.startsWith('?user')) {
     var args = msg.content.split(" ")
     var username = !args[1] || /^\s*$/.test(args[1])
@@ -89,31 +90,60 @@ client.on('message', msg => {
   }
   if (msg.content.startsWith("?profile")) {
     var args = msg.content.split(" ");
-    if (!args[1] || /^\s*$/.test(args[1])) {
-      msg.reply("please add username")
-    } else {
-      msg.channel.send(`https://web.nimses.com/profile/${args[1]}`);
-    }
+    var username = !args[1] || /^\s*$/.test(args[1])
+      ? msg.member.displayName
+      : args[1];
+    msg.channel.send(`https://web.nimses.com/profile/${username}`);
   }
-  if (msg.content.startsWith("?limits")) {
+  if (msg.content.startsWith("?limit")) {
     var args = msg.content.split(" ");
-    if (!args[1] || /^\s*$/.test(args[1])) {
-      msg.reply("please add username")
-    } else {
-      nemsis.getUserLimits(args[1].toLowerCase(), (limits) => {
+    var username = !args[1] || /^\s*$/.test(args[1])
+      ? msg.member.displayName
+      : args[1];
+    nemsis.getUserLimits(username.toLowerCase(), (limits) => {
+      var embed = {
+        color: 3447003,
+        author: {
+          name: "pikami#0050",
+        },
+        fields: [
+          {
+            name: "Nims used",
+            value: `${limits.amount}/${limits.limit}`
+          },
+          {
+            name: "Expiration",
+            value: `${limits.expiration}`.substring(0, 10)
+          },
+        ],
+        footer: {
+          text: "©[REDACTED]#1227"
+        }
+      }
+      msg.channel.send({ embed: embed })
+    });
+  }
+  if (msg.content.startsWith("?posts")) {
+    var args = msg.content.split(" ");
+    var username = !args[1] || /^\s*$/.test(args[1])
+      ? msg.member.displayName
+      : args[1];
+
+    nemsis.getUserPosts(username.toLowerCase(), function(posts) {
+      posts.items.forEach(function(post) {
         var embed = {
+          title: "post",
           color: 3447003,
           author: {
-            name: "pikami#0050",
+            name: "[REDACTED]#1227",
+          },
+          image: {
+            url: post.photo,
           },
           fields: [
             {
-              name: "Nims used",
-              value: `${limits.amount}/${limits.limit}`
-            },
-            {
-              name: "Expiration",
-              value: `${limits.expiration}`.substring(0, 10)
+              name: "text",
+              value: post.text
             },
           ],
           footer: {
@@ -121,57 +151,33 @@ client.on('message', msg => {
           }
         }
         msg.channel.send({ embed: embed })
-      });
-    }
-  }
-  if (msg.content.startsWith("?posts")) {
-    var args = msg.content.split(" ");
-    if (!args[1] || /^\s*$/.test(args[1])) {
-      msg.reply("please add username")
-    } else {
-      nemsis.getUserPosts(args[1].toLowerCase(), function(posts) {
-        posts.items.forEach(function(post) {
-          var embed = {
-            title: "post",
-            color: 3447003,
-            author: {
-              name: "[REDACTED]#1227",
-            },
-            image: {
-              url: post.photo,
-            },
-            fields: [
-              {
-                name: "text",
-                value: post.text
-              },
-            ],
-            footer: {
-              text: "©[REDACTED]#1227"
-            }
-          }
-          msg.channel.send({ embed: embed })
-        })
       })
-    }
-
+    })
   }
-  if(msg.content.startsWith("?warn")){
-    var args = msg.content.split(",")
-    var list = msg.guild.channels.find("name","warned-list")
-    var embed = new Discord.RichEmbed()
-      .setTitle("warning")
-      .setColor("#FF0000")
-      .setAuthor("[REDACTED]#1227")
-      .addField("warner: ",msg.author.tag)
-      .addField("The warned: ",msg.mentions.members.first())
-      .addField("The reason: ",args[2])
-      .addField("Link for context: ", msg.url)
-    client.guilds.get(msg.guild.id).channels.get(list.id).send(embed)
-    if(msg.deletable) {
-      msg.delete()
-    }   
+  if (msg.author.id == "450429165200736256" && msg.content.startsWith("?eval")) {
+    try {
+      const code = msg.content.slice(5);
+      let evaled = await eval(code);
+
+      if (typeof evaled !== "string")
+        evaled = require("util").inspect(evaled);
+      if (evaled == "Promise { <pending> }") {
+
+      } else {
+        await msg.channel.send(clean(evaled), { code: "xl" });
+      }
+    } catch (err) {
+      msg.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+    }
   }
 });
+
+function clean(text) {
+  if (typeof (text) === "string")
+    return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+  else
+    return text;
+}
+
 
 client.login(process.env.TOKEN);
