@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 var keepAlive = require('./keepalive');
 const { inspect } = require('util');
+var utilities = require('./utilities')
 var useKeepAlive = process.env.USEKEEPALIVE;
 
 
@@ -17,11 +18,8 @@ client.on('ready', () => {
 client.on('message', async msg => {
   if (msg.content.startsWith('?user')) {
     var args = msg.content.split(" ")
-    var username = !args[1] || /^\s*$/.test(args[1])
-      ? msg.member.displayName
-      : args[1];
-
-    nemsis.getUserInfo(username, function(user) {
+    var username = utilities.nicknameOrArg(msg)
+    nemsis.getUserInfo(username, function (user) {
       if (user != 404) {
         var embed = {
           title: "user info",
@@ -90,16 +88,12 @@ client.on('message', async msg => {
   }
   if (msg.content.startsWith("?profile")) {
     var args = msg.content.split(" ");
-    var username = !args[1] || /^\s*$/.test(args[1])
-      ? msg.member.displayName
-      : args[1];
+    var username = utilities.nicknameOrArg(msg)
     msg.channel.send(`https://web.nimses.com/profile/${username}`);
   }
   if (msg.content.startsWith("?limit")) {
     var args = msg.content.split(" ");
-    var username = !args[1] || /^\s*$/.test(args[1])
-      ? msg.member.displayName
-      : args[1];
+    var username = utilities.nicknameOrArg(msg)
     nemsis.getUserLimits(username.toLowerCase(), (limits) => {
       var embed = {
         color: 3447003,
@@ -125,12 +119,9 @@ client.on('message', async msg => {
   }
   if (msg.content.startsWith("?posts")) {
     var args = msg.content.split(" ");
-    var username = !args[1] || /^\s*$/.test(args[1])
-      ? msg.member.displayName
-      : args[1];
-
-    nemsis.getUserPosts(username.toLowerCase(), function(posts) {
-      posts.items.forEach(function(post) {
+    var username = utilities.nicknameOrArg(msg)
+    nemsis.getUserPosts(username.toLowerCase(), function (posts) {
+      posts.items.forEach(function (post) {
         var embed = {
           title: "post",
           color: 3447003,
@@ -164,20 +155,13 @@ client.on('message', async msg => {
       if (evaled == "Promise { <pending> }") {
 
       } else {
-        await msg.channel.send(clean(evaled), { code: "xl" });
+        await msg.channel.send(utilities.clean(evaled), { code: "xl" });
       }
     } catch (err) {
-      msg.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+      msg.channel.send(`\`ERROR\` \`\`\`xl\n${utilities.clean(err)}\n\`\`\``);
     }
   }
 });
-
-function clean(text) {
-  if (typeof (text) === "string")
-    return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-  else
-    return text;
-}
 
 
 client.login(process.env.TOKEN);
