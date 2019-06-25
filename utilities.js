@@ -9,7 +9,8 @@ exports.clean = function (text) {
 }
 
 exports.nicknameOrArg = function(msg){
+    var args = msg.content.split(" ")
     if(!args[1] || /^\s*$/.test(args[1])){
-        return msg.author.displayName
+        return msg.member.displayName
     } else return args[1]
 }

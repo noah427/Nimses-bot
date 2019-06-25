@@ -5,6 +5,7 @@ var keepAlive = require('./keepalive');
 const { inspect } = require('util');
 var utilities = require('./utilities')
 var useKeepAlive = process.env.USEKEEPALIVE;
+const dotenv = require(`dotenv`).config()
 
 
 if (useKeepAlive === "true") {
