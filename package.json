@@ -4,6 +4,7 @@
   "description": "nimses api bot to show user stats and stuff",
   "main": "app.js",
   "dependencies": {
+    "cach": "^1.0.6",
     "discord.js": "^11.5.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
