@@ -2,7 +2,7 @@
   "name": "nimses-bot",
   "version": "1.0.0",
   "description": "nimses api bot to show user stats and stuff",
-  "main": "app.js",
+  "main": "start.js",
   "dependencies": {
     "cach": "^1.0.6",
     "discord.js": "^11.5.1",
