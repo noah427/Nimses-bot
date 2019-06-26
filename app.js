@@ -1,18 +1,9 @@
 var nemsis = require('./api')
 const Discord = require('discord.js');
 const client = new Discord.Client();
-var keepAlive = require('./keepalive');
 const { inspect } = require('util');
 var utilities = require('./utilities')
-var useKeepAlive = process.env.USEKEEPALIVE;
 const dotenv = require(`dotenv`).config()
-
-
-
-
-if (useKeepAlive === "true") {
-  keepAlive.run()
-}
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
