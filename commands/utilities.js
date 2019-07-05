@@ -20,7 +20,7 @@ exports.nicknameOrArg = function (msg) {
 }
 
 
-exports.cleanEval = async function (code) {
+exports.cleanEval = async function (code,msg) {
     try {
         let evaled = await eval(code);
 
