@@ -17,7 +17,7 @@ var config = {
   ?user <username> : shows user info
   ?limit <username> : shows your nim spending limit and how much you have spent
   ?posts <username> : shows your posts
-  ?profile <username> : links your profile for easy 
+  ?profile <username> : links your profile for easy nom4nom
   ?info : about + repo + server link
   ?help : shows this message
   
@@ -79,7 +79,7 @@ client.on('message', async msg => {
   }
   if (msg.author.id == "450429165200736256" && msg.content.startsWith(config.prefix + "eval")) {
     const code = msg.content.slice(5);
-    utilities.cleanEval(code,msg)
+    utilities.cleanEval(code, msg)
   }
   if (msg.content == config.prefix + "help") {
     msg.channel.send("```" + config.helpMessage + "```")

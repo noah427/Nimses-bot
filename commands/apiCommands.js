@@ -1,6 +1,7 @@
 var exports = module.exports = {}
 var nemsis = require('./api')
 var utilities = require('./utilities')
+const Discord = require('discord.js');
 
 
 
@@ -10,59 +11,22 @@ exports.user = function (msg) {
     var username = utilities.nicknameOrArg(msg)
     nemsis.getUserInfo(username, function (user) {
         if (user != 404) {
-            var embed = {
-                title: "user info",
-                description: "shows user info and stuff",
-                color: 3447003,
-                author: {
-                    name: "[REDACTED]#1227"
-                },
-                image: {
-                    url: user.profile.avatar
-                },
-                fields: [
-                    {
-                        name: "username: ",
-                        value: user.profile.nickName
-                    },
-                    {
-                        name: "dominims: ",
-                        value: user.profile.balanceDominims
-                    },
-                    {
-                        name: "nims: ",
-                        value: user.profile.balanceNims
-                    },
-                    {
-                        name: "followers: ",
-                        value: user.profile.followers
-                    },
-                    {
-                        name: "following: ",
-                        value: user.profile.following
-                    },
-                    {
-                        name: "visitors: ",
-                        value: user.profile.visitors
-                    },
-                    {
-                        name: "level? (no idea what this means): ",
-                        value: user.profile.level
-                    },
-                    {
-                        name: "is an angel: ",
-                        value: user.profile.isAngel
-                    },
-                    {
-                        name: "is master: ",
-                        value: user.profile.isMaster
-                    },
-                ],
-                footer: {
-                    text: "©[REDACTED]#1227"
-                }
-            }
-            msg.channel.send({ embed: embed })
+            var embed = new Discord.RichEmbed()
+                .setTitle('User info')
+                .setDescription('Displays user info/stats')
+                .setColor('#3447003')
+                .setAuthor('[REDACTED]#1227')
+                .setImage(user.profile.avatar)
+                .addField("Username: ", user.profile.nickName)
+                .addField("Dominims: ", user.profile.balanceDominims)
+                .addField("Nims: ", user.profile.balanceNims)
+                .addField("Followers: ", user.profile.followers)
+                .addField("Following: ", user.profile.following)
+                .addField("Visitors: ", user.profile.visitors)
+                .addField("is an angel: ", user.profile.isAngel)
+                .addField("is a master: ", user.profile.isMaster)
+                .setFooter("©[REDACTED]#1227")
+            msg.channel.send(embed)
         }
         else {
             msg.channel.send("can't find that user")
@@ -77,26 +41,14 @@ exports.limit = function (msg) {
     var args = msg.content.split(" ");
     var username = utilities.nicknameOrArg(msg)
     nemsis.getUserLimits(username.toLowerCase(), (limits) => {
-        var embed = {
-            color: 3447003,
-            author: {
-                name: "pikami#0050",
-            },
-            fields: [
-                {
-                    name: "Nims used",
-                    value: `${limits.amount}/${limits.limit}`
-                },
-                {
-                    name: "Expiration",
-                    value: `${limits.expiration}`.substring(0, 10)
-                },
-            ],
-            footer: {
-                text: "©[REDACTED]#1227"
-            }
-        }
-        msg.channel.send({ embed: embed })
+        var embed = new Discord.RichEmbed()
+            .setTitle("Nims spent/Limit")
+            .setAuthor("pikami#0050")
+            .setColor("#3447003")
+            .addField("Nims used: ", limits.amount)
+            .addField("Daily limit: ", limit.limit)
+            .setFooter("©[REDACTED]#1227")
+        msg.channel.send(embed)
     });
 }
 
@@ -108,26 +60,13 @@ exports.posts = function (msg) {
     var username = utilities.nicknameOrArg(msg)
     nemsis.getUserPosts(username.toLowerCase(), function (posts) {
         posts.items.forEach(function (post) {
-            var embed = {
-                title: "post",
-                color: 3447003,
-                author: {
-                    name: "[REDACTED]#1227",
-                },
-                image: {
-                    url: post.photo,
-                },
-                fields: [
-                    {
-                        name: "text",
-                        value: post.text
-                    },
-                ],
-                footer: {
-                    text: "©[REDACTED]#1227"
-                }
-            }
-            msg.channel.send({ embed: embed })
+            var embed = new Discord.RichEmbed()
+                .setAuthor("Post: ")
+                .setColor("#3447003")
+                .setImage(post.photo)
+                .addField("text: ", post.text)
+                .setFooter("©[REDACTED]#1227")
+            msg.channel.send(embed)
         })
     })
 }
