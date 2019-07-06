@@ -9,7 +9,7 @@ const Discord = require('discord.js');
 exports.user = function (msg) {
     var args = msg.content.split(" ")
     var username = utilities.nicknameOrArg(msg)
-    nemsis.getUserInfo(username, function (user) {
+    nemsis.getUserInfo(username.toLowerCase(), function (user) {
         if (user === 404) {
             msg.channel.send("can't find that user")
         }

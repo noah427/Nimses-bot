@@ -57,7 +57,6 @@ client.on('ready', () => {
 });
 
 client.on('message', async msg => {
-  msg.content = msg.content.toLowerCase().replace(" ","_")
   if (msg.content.startsWith(config.prefix + 'user')) {
     apiCommands.user(msg)
   }
@@ -68,8 +67,8 @@ client.on('message', async msg => {
     msg.reply("please use profile link instead, ?profile <nimses-username>")
   }
   if (msg.content.startsWith(config.prefix + "profile")) {
-    var args = msg.content.split(" ");
-    var username = utilities.nicknameOrArg(msg)
+    var arg = msg.content.slice(9).replace(" ","_")
+    var username = arg ? arg : msg.member.displayName
     msg.channel.send(`https://web.nimses.com/profile/${username}`);
   }
   if (msg.content.startsWith(config.prefix + "limit")) {
