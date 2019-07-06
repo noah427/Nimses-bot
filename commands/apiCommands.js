@@ -17,7 +17,7 @@ exports.user = function (msg) {
             var embed = new Discord.RichEmbed()
                 .setTitle('User info')
                 .setDescription('Displays user info/stats')
-                .setColor('#000')
+                .setColor('#4169e1')
                 .setAuthor('[REDACTED]#1227')
                 .setImage(user.profile.avatar)
                 .addField("Username: ", user.profile.nickName)
@@ -46,7 +46,7 @@ exports.limit = function (msg) {
         } else {
             var embed = new Discord.RichEmbed()
                 .setAuthor("pikami#0050")
-                .setColor("#000")
+                .setColor("#4169e1")
                 .addField("Nims spent/limit", `${limits.amount}/${limits.limit}`)
                 .setFooter("©[REDACTED]#1227")
             msg.channel.send(embed)
@@ -68,7 +68,7 @@ exports.posts = function (msg) {
             posts.items.forEach(function (post) {
                 var embed = new Discord.RichEmbed()
                     .setAuthor("Post: ")
-                    .setColor("#000")
+                    .setColor("#4169e1")
                     .setImage(post.photo)
                     .addField("text: ", post.text)
                     .setFooter("©[REDACTED]#1227")
