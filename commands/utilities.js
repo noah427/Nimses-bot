@@ -12,11 +12,10 @@ exports.clean = function (text) {
 
 
 
-exports.nicknameOrArg = function (msg) {
-    var args = msg.content.split(" ")
-    if (!args[1] || /^\s*$/.test(args[1])) {
-        return msg.member.displayName
-    } else return args[1]
+exports.nicknameOrArg = function (arg,displayName) {
+    if (!arg || /^\s*$/.test(arg)) {
+        return displayName
+    } else return arg
 }
 
 

@@ -68,7 +68,7 @@ client.on('message', async msg => {
   }
   if (msg.content.startsWith(config.prefix + "profile")) {
     var arg = msg.content.slice(9).replace(" ","_")
-    var username = arg ? arg : msg.member.displayName
+    var username = utilities.nicknameOrArg(arg,msg.member.displayName)
     msg.channel.send(`https://web.nimses.com/profile/${username}`);
   }
   if (msg.content.startsWith(config.prefix + "limit")) {
