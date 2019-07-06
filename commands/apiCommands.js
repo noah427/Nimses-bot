@@ -10,7 +10,10 @@ exports.user = function (msg) {
     var args = msg.content.split(" ")
     var username = utilities.nicknameOrArg(msg)
     nemsis.getUserInfo(username, function (user) {
-        if (user != 404) {
+        if (user === 404) {
+            msg.channel.send("can't find that user")
+        }
+        else {
             var embed = new Discord.RichEmbed()
                 .setTitle('User info')
                 .setDescription('Displays user info/stats')
@@ -28,9 +31,6 @@ exports.user = function (msg) {
                 .setFooter("©[REDACTED]#1227")
             msg.channel.send(embed)
         }
-        else {
-            msg.channel.send("can't find that user")
-        }
     })
 }
 
@@ -41,13 +41,17 @@ exports.limit = function (msg) {
     var args = msg.content.split(" ");
     var username = utilities.nicknameOrArg(msg)
     nemsis.getUserLimits(username.toLowerCase(), (limits) => {
-        var embed = new Discord.RichEmbed()
-            .setTitle("Nims spent/Limit")
-            .setAuthor("pikami#0050")
-            .setColor("#000")
-            .addField("Nims spent/limit", `${limits.amount}/${limit.limit}`)
-            .setFooter("©[REDACTED]#1227")
-        msg.channel.send(embed)
+        if (limits === 404) {
+            msg.channel.send("can't find that user")
+        } else {
+            var embed = new Discord.RichEmbed()
+                .setTitle("Nims spent/Limit")
+                .setAuthor("pikami#0050")
+                .setColor("#000")
+                .addField("Nims spent/limit", `${limits.amount}/${limit.limit}`)
+                .setFooter("©[REDACTED]#1227")
+            msg.channel.send(embed)
+        }
     });
 }
 
@@ -58,14 +62,19 @@ exports.posts = function (msg) {
     var args = msg.content.split(" ");
     var username = utilities.nicknameOrArg(msg)
     nemsis.getUserPosts(username.toLowerCase(), function (posts) {
-        posts.items.forEach(function (post) {
-            var embed = new Discord.RichEmbed()
-                .setAuthor("Post: ")
-                .setColor("#000")
-                .setImage(post.photo)
-                .addField("text: ", post.text)
-                .setFooter("©[REDACTED]#1227")
-            msg.channel.send(embed)
-        })
+        if (posts === 404) {
+            msg.channel.send("can't find that user")
+
+        } else {
+            posts.items.forEach(function (post) {
+                var embed = new Discord.RichEmbed()
+                    .setAuthor("Post: ")
+                    .setColor("#000")
+                    .setImage(post.photo)
+                    .addField("text: ", post.text)
+                    .setFooter("©[REDACTED]#1227")
+                msg.channel.send(embed)
+            })
+        }
     })
 }
