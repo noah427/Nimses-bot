@@ -57,6 +57,7 @@ client.on('ready', () => {
 });
 
 client.on('message', async msg => {
+  msg.content = msg.content.toLowerCase().replace(" ","_")
   if (msg.content.startsWith(config.prefix + 'user')) {
     apiCommands.user(msg)
   }
