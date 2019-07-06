@@ -12,7 +12,7 @@ exports.clean = function (text) {
 
 
 
-exports.nicknameOrArg = function (arg,displayName) {
+exports.nicknameOrArg = function (msg) {
     var arg = msg.content.slice(6).replace(" ","_")
     if (!arg || /^\s*$/.test(arg)) {
         return msg.member.displayName
