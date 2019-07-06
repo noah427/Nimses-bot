@@ -45,10 +45,9 @@ exports.limit = function (msg) {
             msg.channel.send("can't find that user")
         } else {
             var embed = new Discord.RichEmbed()
-                .setTitle("Nims spent/Limit")
                 .setAuthor("pikami#0050")
                 .setColor("#000")
-                .addField("Nims spent/limit", `${limits.amount}/${limit.limit}`)
+                .addField("Nims spent/limit", `${limits.amount}/${limits.limit}`)
                 .setFooter("©[REDACTED]#1227")
             msg.channel.send(embed)
         }
