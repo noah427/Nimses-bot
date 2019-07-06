@@ -45,8 +45,7 @@ exports.limit = function (msg) {
             .setTitle("Nims spent/Limit")
             .setAuthor("pikami#0050")
             .setColor("#000")
-            .addField("Nims used: ", limits.amount)
-            .addField("Daily limit: ", limits.limit)
+            .addField("Nims spent/limit", `${limits.amount}/${limit.limit}`)
             .setFooter("©[REDACTED]#1227")
         msg.channel.send(embed)
     });
