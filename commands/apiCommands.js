@@ -7,7 +7,8 @@ const Discord = require('discord.js');
 
 
 exports.user = function (msg) {
-    var username = utilities.nicknameOrArg(msg)
+    var arg = msg.content.slice(6).replace(" ","_")
+    var username = utilities.nicknameOrArg(arg,msg.member.displayName)
     nemsis.getUserInfo(username.toLowerCase(), function (user) {
         if (user === 404) {
             msg.channel.send("can't find that user")
@@ -37,7 +38,8 @@ exports.user = function (msg) {
 
 
 exports.limit = function (msg) {
-    var username = utilities.nicknameOrArg(msg)
+    var arg = msg.content.slice(7).replace(" ","_")
+    var username = utilities.nicknameOrArg(arg,msg.member.displayName)
     nemsis.getUserLimits(username.toLowerCase(), (limits) => {
         if (limits === 404) {
             msg.channel.send("can't find that user")
@@ -56,7 +58,8 @@ exports.limit = function (msg) {
 
 
 exports.posts = function (msg) {
-    var username = utilities.nicknameOrArg(msg)
+    var arg = msg.content.slice(6).replace(" ","_")
+    var username = utilities.nicknameOrArg(arg,msg.member.displayName)
     nemsis.getUserPosts(username.toLowerCase(), function (posts) {
         if (posts === 404) {
             msg.channel.send("can't find that user")

@@ -12,12 +12,12 @@ exports.clean = function (text) {
 
 
 
-exports.nicknameOrArg = function (msg) {
-    var arg = msg.content.slice(6).replace(" ","_")
+exports.nicknameOrArg = function (arg,displayName) {
     if (!arg || /^\s*$/.test(arg)) {
-        return msg.member.displayName
+        return displayName
     } else return arg
 }
+
 
 
 exports.cleanEval = async function (code,msg) {
