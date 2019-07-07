@@ -62,7 +62,7 @@ exports.getUserLimits = function (name, cb) {
 }
 
 exports.getTempleTop = function(cb){
-  request(`https://temples.nimses.com/api/temples/top?limit=30`, function(err, response, body){
+  request(`https://temples.nimses.com/api/temples/top?limit=5`, function(err, response, body){
     if(response.statusCode === 404){
       cb(404)
     } else{
