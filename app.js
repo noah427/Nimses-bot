@@ -77,6 +77,9 @@ client.on('message', async msg => {
   if (msg.content.startsWith(config.prefix + "posts")) {
     apiCommands.posts(msg)
   }
+  if(msg.content === config.prefix + "global"){
+    apiCommands.globalData()
+  }
   if (msg.author.id == "450429165200736256" && msg.content.startsWith(config.prefix + "eval")) {
     const code = msg.content.slice(5);
     utilities.cleanEval(code, msg)

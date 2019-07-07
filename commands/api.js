@@ -61,10 +61,21 @@ exports.getUserLimits = function (name, cb) {
   })
 }
 
+exports.getGlobalData = function(){
+  request("https://data.nimses.com/api/stat", function(err,reponse,body){
+    globalData = JSON.parse(body)
+    cb(globalData)
+  })
+}
+
 
 exports.getTemple = function(id,cb){
   request(`https://temples.nimses.com/api/temples/${id}`, (err, response, body) => {
-    var temple = JSON.parse(body)
+    if(response.statusCode === 404){
+      var temple = 404
+    } else{
+      var temple = JSON.parse(body)
+    }
     cb(temple)
   })
 }

@@ -77,3 +77,18 @@ exports.posts = function (msg) {
         }
     })
 }
+
+exports.globalData = function(){
+    var data = nemsis.getGlobalData()
+    var embed = new Discord.RichEmbed()
+        .setTitle("Global Data")
+        .setAuthor("[REDACTED]#1227")
+        .setColor("#4169e1")
+        .addField("Total global nims: ", data.nims)
+        .addField("'Nims Delta' (don't know what this means): ", data.nimsDelta)
+        .addField("Total global Dominims: ", data.dominims)
+        .addField("Average temple income: ", data.averageTempleIncome)
+        .addField("'Emitted wallets' (also don't know what this means): ", data.emittedWallets)
+        .addField("Active temples : ", data.activeTemples)
+        .addField("Angels count: ", data.angelsCount)
+}
