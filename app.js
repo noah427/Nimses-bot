@@ -78,7 +78,7 @@ client.on('message', async msg => {
     apiCommands.posts(msg)
   }
   if(msg.content === config.prefix + "global"){
-    apiCommands.globalData()
+    apiCommands.globalData(msg)
   }
   if (msg.author.id == "450429165200736256" && msg.content.startsWith(config.prefix + "eval")) {
     const code = msg.content.slice(5);

@@ -7,8 +7,8 @@ const Discord = require('discord.js');
 
 
 exports.user = function (msg) {
-    var arg = msg.content.slice(6).replace(" ","_")
-    var username = utilities.nicknameOrArg(arg,msg.member.displayName)
+    var arg = msg.content.slice(6).replace(" ", "_")
+    var username = utilities.nicknameOrArg(arg, msg.member.displayName)
     nemsis.getUserInfo(username.toLowerCase(), function (user) {
         if (user === 404) {
             msg.channel.send("can't find that user")
@@ -38,8 +38,8 @@ exports.user = function (msg) {
 
 
 exports.limit = function (msg) {
-    var arg = msg.content.slice(7).replace(" ","_")
-    var username = utilities.nicknameOrArg(arg,msg.member.displayName)
+    var arg = msg.content.slice(7).replace(" ", "_")
+    var username = utilities.nicknameOrArg(arg, msg.member.displayName)
     nemsis.getUserLimits(username.toLowerCase(), (limits) => {
         if (limits === 404) {
             msg.channel.send("can't find that user")
@@ -58,8 +58,8 @@ exports.limit = function (msg) {
 
 
 exports.posts = function (msg) {
-    var arg = msg.content.slice(6).replace(" ","_")
-    var username = utilities.nicknameOrArg(arg,msg.member.displayName)
+    var arg = msg.content.slice(6).replace(" ", "_")
+    var username = utilities.nicknameOrArg(arg, msg.member.displayName)
     nemsis.getUserPosts(username.toLowerCase(), function (posts) {
         if (posts === 404) {
             msg.channel.send("can't find that user")
@@ -78,17 +78,19 @@ exports.posts = function (msg) {
     })
 }
 
-exports.globalData = function(){
-    var data = nemsis.getGlobalData()
-    var embed = new Discord.RichEmbed()
-        .setTitle("Global Data")
-        .setAuthor("[REDACTED]#1227")
-        .setColor("#4169e1")
-        .addField("Total global nims: ", data.nims)
-        .addField("'Nims Delta' (don't know what this means): ", data.nimsDelta)
-        .addField("Total global Dominims: ", data.dominims)
-        .addField("Average temple income: ", data.averageTempleIncome)
-        .addField("'Emitted wallets' (also don't know what this means): ", data.emittedWallets)
-        .addField("Active temples : ", data.activeTemples)
-        .addField("Angels count: ", data.angelsCount)
+exports.globalData = function (msg) {
+    var data = nemsis.getGlobalData(function (data) {
+        var embed = new Discord.RichEmbed()
+            .setTitle("Global Data")
+            .setAuthor("[REDACTED]#1227")
+            .setColor("#4169e1")
+            .addField("Total global nims: ", data.nims)
+            .addField("'Nims Delta' (don't know what this means): ", data.nimsDelta)
+            .addField("Total global Dominims: ", data.dominims)
+            .addField("Average temple income: ", data.averageTempleIncome)
+            .addField("'Emitted wallets' (also don't know what this means): ", data.emittedWallets)
+            .addField("Active temples : ", data.activeTemples)
+            .addField("Angels count: ", data.angelsCount)
+        msg.channel.send(embed)        
+    })
 }
