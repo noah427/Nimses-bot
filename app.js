@@ -52,6 +52,8 @@ var config = {
 }
 
 
+
+
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
@@ -89,6 +91,9 @@ client.on('message', async msg => {
   }
   if (msg.content === config.prefix + "info") {
     msg.channel.send("```" + config.infoMessage + "```")
+  }
+  if(msg.content === config.prefix + "servers"){
+    msg.channel.send(client.guilds.array().join(",\n"))
   }
 });
 
