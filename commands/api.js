@@ -67,6 +67,7 @@ exports.getTempleTop = function(cb){
       cb(404)
     } else{
       var temples = JSON.parse(body)
+      cb(temples)
     }
   })
 }
