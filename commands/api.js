@@ -61,7 +61,7 @@ exports.getUserLimits = function (name, cb) {
   })
 }
 
-exports.getGlobalData = function(){
+exports.getGlobalData = function(cb){
   request("https://data.nimses.com/api/stat", function(err,reponse,body){
     globalData = JSON.parse(body)
     cb(globalData)
