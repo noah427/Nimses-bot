@@ -148,6 +148,11 @@ client.on('message', async msg => {
     msg.channel.send(client.guilds.array().join(",\n"))
   }
 
+  
+
+  if(msg.content.startsWith(config.prefix + "statusrole")){
+    apiCommands.statusRoles(msg)
+  }
 
   
 });

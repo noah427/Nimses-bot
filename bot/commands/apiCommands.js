@@ -25,8 +25,10 @@ exports.user = function (msg) {
                 .addField("Nims: ", utilities.commaSeparater(user.profile.balanceNims))
                 .addField("Followers: ", utilities.commaSeparater(user.profile.followers))
                 .addField("Following: ", utilities.commaSeparater(user.profile.following))
+                .addField("Nominations: ", utilities.commaSeparater(user.profile.nominationsCount))
+                .addField("Nominations needed for next status: ", utilities.commaSeparater(user.profile.nominationsForNextStatus))
                 .addField("Visitors: ", utilities.commaSeparater(user.profile.visitors))
-                .addField("is an angel: ", user.profile.isAngel)
+                .addField("Status: ", utilities.findNimsesRole(user.profile.level, user.profile.status))
                 .addField("is a master: ", user.profile.isMaster)
                 .setFooter("©[REDACTED]#1227")
             msg.channel.send(embed)
@@ -93,5 +95,21 @@ exports.globalData = function (msg) {
             .addField("Active temples : ", utilities.commaSeparater(data.activeTemples))
             .addField("Angels count: ", utilities.commaSeparater(data.angelsCount))
         msg.channel.send(embed)
+    })
+}
+
+exports.statusRoles = function (msg) {
+    var arg = msg.content.slice(12).replace(" ", "_")
+    var username = utilities.nicknameOrArg(arg, msg.member.displayName)
+    nemsis.getUserInfo(username, function(info){
+        if(info === 404){
+            msg.channel.send("can't find that user")
+        } else if(utilities.findNimsesRole(info.profile.level,info.profile.status) === "don't know"){
+            msg.channel.send("don't know what status you have")
+        } else{
+            var role = msg.guild.roles.find(role => role.name === utilities.findNimsesRole(info.profile.level,info.profile.status))
+            msg.member.addRole(role)
+            msg.channel.send(`gave you the ${role.name}, role!`)
+        }
     })
 }
