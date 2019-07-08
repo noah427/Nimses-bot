@@ -50,6 +50,14 @@ var config = {
 
   Creator : [REDACTED]#1227
   `,
+  rolesToMake : [
+    ["icon","RED"],
+    ["angel", "#ff0066"],
+    ["indie","ORANGE"],
+    ["persona","#ffcc00"],
+    ["human","GREEN"],
+    ["user","GREY"],
+  ],
 }
 
 
@@ -152,6 +160,16 @@ client.on('message', async msg => {
 
   if(msg.content.startsWith(config.prefix + "statusrole")){
     apiCommands.statusRoles(msg)
+  }
+
+
+  if(msg.content === config.prefix + "configroles"){
+    for (let i = 0;i < config.rolesToMake.length;i++){
+      msg.guild.createRole({
+        name: config.rolesToMake[i][0],
+        color: config.rolesToMake[i][1],
+      })
+    }
   }
 
   
