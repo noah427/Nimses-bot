@@ -158,12 +158,12 @@ client.on('message', async msg => {
 
   
 
-  if(msg.content.startsWith(config.prefix + "statusrole")){
+  if(msg.content.startsWith(config.prefix + "statusrole" && config.partneredServers.includes(msg.guild.id))){
     apiCommands.statusRoles(msg)
   }
 
 
-  if(msg.content === config.prefix + "configroles"){
+  if(msg.content === config.prefix + "configroles" && config.partneredServers.includes(msg.guild.id)){
     for (let i = 0;i < config.rolesToMake.length;i++){
       msg.guild.createRole({
         name: config.rolesToMake[i][0],
