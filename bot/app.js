@@ -9,6 +9,7 @@ const apiCommands = require('./commands/apiCommands')
 
 var config = {
   prefix: "?",
+  ownerID : "450429165200736256",
   partneredServers: [
     "593210721517699083",
     "591039202913812480",
@@ -163,7 +164,7 @@ client.on('message', async msg => {
   }
 
 
-  if(msg.content === config.prefix + "configroles" && config.partneredServers.includes(msg.guild.id)){
+  if(msg.content === config.prefix + "configroles" && config.partneredServers.includes(msg.guild.id) && msg.author.id === config.ownerID){
     for (let i = 0;i < config.rolesToMake.length;i++){
       msg.guild.createRole({
         name: config.rolesToMake[i][0],
