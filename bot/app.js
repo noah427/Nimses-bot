@@ -6,6 +6,7 @@ const dotenv = require(`dotenv`).config()
 const apiCommands = require('./commands/apiCommands')
 
 
+
 var config = {
   prefix: "?",
   partneredServers: [
