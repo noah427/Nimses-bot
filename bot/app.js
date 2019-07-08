@@ -22,6 +22,10 @@ var config = {
   ?profile <username> : links your profile for easy nom4nom
   ?info : about + repo + server link
   ?help : shows this message
+  ?global : shows global nimses info
+  ?servers : shows which servers the bot is in
+  ?statusrole <username> : gives you the role for the status you have on nimses partnered server only
+  ?templestop : coming very soon will show top temples info
   
   -----------------
   all of these ^ commands can be used without the username
