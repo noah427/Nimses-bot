@@ -10,4 +10,4 @@ if (useKeepAlive === "true") {
     keepAlive.run()
 }
 
-cach("node app.js")
+cach("node bot/app.js")

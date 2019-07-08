@@ -70,8 +70,8 @@ client.on('message', async msg => {
     msg.reply("please use profile link instead, ?profile <nimses-username>")
   }
   if (msg.content.startsWith(config.prefix + "profile")) {
-    var arg = msg.content.slice(9).replace(" ","_")
-    var username = utilities.nicknameOrArg(arg,msg.member.displayName)
+    var arg = msg.content.slice(9).replace(" ", "_")
+    var username = utilities.nicknameOrArg(arg, msg.member.displayName)
     msg.channel.send(`https://web.nimses.com/profile/${username}`);
   }
   if (msg.content.startsWith(config.prefix + "limit")) {
@@ -80,15 +80,27 @@ client.on('message', async msg => {
   if (msg.content.startsWith(config.prefix + "posts")) {
     apiCommands.posts(msg)
   }
-  if(msg.content === config.prefix + "global"){
+  if (msg.content === config.prefix + "global") {
     apiCommands.globalData(msg)
   }
-  if(msg.content === config.prefix + "templestop"){
+  if (msg.content === config.prefix + "templestop") {
     msg.channel.send("coming soon")
   }
   if (msg.author.id == "450429165200736256" && msg.content.startsWith(config.prefix + "eval")) {
     const code = msg.content.slice(5);
-    utilities.cleanEval(code, msg)
+    try {
+      let evaled = await eval(code);
+
+      if (typeof evaled !== "string")
+        evaled = require("util").inspect(evaled);
+      if (evaled == "Promise { <pending> }") {
+
+      } else {
+        await msg.channel.send(utilities.clean(evaled), { code: "xl" });
+      }
+    } catch (err) {
+      msg.channel.send(`\`ERROR\` \`\`\`xl\n${utilities.clean(err)}\n\`\`\``);
+    }
   }
   if (msg.content == config.prefix + "help") {
     msg.channel.send("```" + config.helpMessage + "```")
@@ -96,7 +108,7 @@ client.on('message', async msg => {
   if (msg.content === config.prefix + "info") {
     msg.channel.send("```" + config.infoMessage + "```")
   }
-  if(msg.content === config.prefix + "servers"){
+  if (msg.content === config.prefix + "servers") {
     msg.channel.send(client.guilds.array().join(",\n"))
   }
 });

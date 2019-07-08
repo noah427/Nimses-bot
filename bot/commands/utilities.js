@@ -10,28 +10,17 @@ exports.clean = function (text) {
         return text;
 }
 
+exports.commaSeparater = function (val) {
+    while (/(\d+)(\d{3})/.test(val.toString())) {
+        val = val.toString().replace(/(\d+)(\d{3})/, '$1' + ',' + '$2');
+    }
+    return val;
+}
 
-
-exports.nicknameOrArg = function (arg,displayName) {
+exports.nicknameOrArg = function (arg, displayName) {
     if (!arg || /^\s*$/.test(arg)) {
         return displayName
     } else return arg
 }
 
 
-
-exports.cleanEval = async function (code,msg) {
-    try {
-        let evaled = await eval(code);
-
-        if (typeof evaled !== "string")
-            evaled = require("util").inspect(evaled);
-        if (evaled == "Promise { <pending> }") {
-
-        } else {
-            await msg.channel.send(exports.clean(evaled), { code: "xl" });
-        }
-    } catch (err) {
-        msg.channel.send(`\`ERROR\` \`\`\`xl\n${exports.clean(err)}\n\`\`\``);
-    }
-}
