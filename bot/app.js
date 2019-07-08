@@ -168,6 +168,7 @@ client.on('message', async msg => {
       msg.guild.createRole({
         name: config.rolesToMake[i][0],
         color: config.rolesToMake[i][1],
+        hoist : true,
       })
     }
   }
