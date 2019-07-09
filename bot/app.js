@@ -161,9 +161,7 @@ client.on('message', async msg => {
     msg.channel.send(client.guilds.array().join(",\n"))
   }
 
-  
-
-  if(msg.content.startsWith(config.prefix + "statusrole" && config.partneredServers.includes(msg.guild.id))){
+  if(msg.content.startsWith(config.prefix + "statusrole") && config.partneredServers.includes(msg.guild.id)){
     apiCommands.statusRoles(msg)
   }
 
@@ -180,6 +178,7 @@ client.on('message', async msg => {
 
   
 });
+
 
 
 
