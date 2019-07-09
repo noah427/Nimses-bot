@@ -34,7 +34,7 @@ exports.getUserID = function (name, callback) {
 
 exports.getUserPosts = function (name, cb) {
 
-  this.getUserID(name, function() {
+  this.getUserID(name, function(ID) {
     if (ID == 404) {
       cb(ID)
     }
