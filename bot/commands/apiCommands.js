@@ -107,7 +107,7 @@ exports.statusRoles = function (msg) {
         } else if(utilities.findNimsesRole(info.profile.level,info.profile.status) === "don't know"){
             msg.channel.send("don't know what status you have")
         } else{
-            var role = msg.guild.roles.find(role => role.name === utilities.findNimsesRole(info.profile.level,info.profile.status))
+            var role = msg.guild.roles.find(role => role.name.toLowerCase() === utilities.findNimsesRole(info.profile.level,info.profile.status))
             msg.member.addRole(role)
             msg.channel.send(`gave you the ${role.name}, role!`)
         }
