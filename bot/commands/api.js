@@ -16,17 +16,14 @@ exports.getUserInfo = function (name, callback) {
 }
 
 
-exports.getUserID = function (name, callback) {
-  name = name.toLowerCase()
-
+exports.getUserID = function (name, cb) {
   request(`https://web.nimses.com/api/profile/${name}`, function (error, response, body) {
     if (response.statusCode == 404) {
       var Userinfo = 404
       cb(Userinfo)
-    }
-    else {
+    } else {
       var Userinfo = JSON.parse(body)
-      callback(Userinfo.profile.id)
+      cb(Userinfo.profile.id)
     }
   });
 }

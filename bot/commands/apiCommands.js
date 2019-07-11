@@ -9,7 +9,7 @@ const Discord = require('discord.js');
 exports.user = function (msg) {
     var arg = msg.content.slice(6).replace(" ", "_")
     var username = utilities.nicknameOrArg(arg, msg.member.displayName)
-    nemsis.getUserInfo(username.toLowerCase(), function (user) {
+    nemsis.getUserInfo(username, function (user) {
         if (user === 404) {
             msg.channel.send("can't find that user")
         }
@@ -42,7 +42,7 @@ exports.user = function (msg) {
 exports.limit = function (msg) {
     var arg = msg.content.slice(7).replace(" ", "_")
     var username = utilities.nicknameOrArg(arg, msg.member.displayName)
-    nemsis.getUserLimits(username.toLowerCase(), (limits) => {
+    nemsis.getUserLimits(username, (limits) => {
         if (limits === 404) {
             msg.channel.send("can't find that user")
         } else {
@@ -60,26 +60,30 @@ exports.limit = function (msg) {
 
 
 exports.posts = function (msg) {
-    var arg = msg.content.slice(6).replace(" ", "_")
+    var arg = msg.content.slice(7).replace(" ", "_")
     var username = utilities.nicknameOrArg(arg, msg.member.displayName)
-    nemsis.getUserPosts(username.toLowerCase(), function (posts) {
+    nemsis.getUserPosts(username, function (posts) {
         if (posts === 404) {
             msg.channel.send("can't find that user")
 
         } else {
-            posts.items.forEach(function (post) {
-                var embed = new Discord.RichEmbed()
-                    .setTitle("Post: ")
-                    .setAuthor("[REDACTED]#1227")
-                    .setColor("#4169e1")
-                    .setImage(post.photo)
-                    .addField("text: ", post.text)
-                    .setFooter("©[REDACTED]#1227")
-                msg.channel.send(embed)
-            })
+            if (!(posts.items.length < 1)) {
+                posts.items.forEach(function (post) {
+                    var embed = new Discord.RichEmbed()
+                        .setTitle("Post: ")
+                        .setAuthor("[REDACTED]#1227")
+                        .setColor("#4169e1")
+                        post.photo ? embed.setImage(post.photo) : "no photo here"
+                        .addField("text: ", post.text)
+                        .setFooter("©[REDACTED]#1227")
+                    msg.channel.send(embed)
+                })
+            }
         }
+
     })
 }
+
 
 exports.globalData = function (msg) {
     var data = nemsis.getGlobalData(function (data) {
@@ -101,13 +105,13 @@ exports.globalData = function (msg) {
 exports.statusRoles = function (msg) {
     var arg = msg.content.slice(12).replace(" ", "_")
     var username = utilities.nicknameOrArg(arg, msg.member.displayName)
-    nemsis.getUserInfo(username, function(info){
-        if(info === 404){
+    nemsis.getUserInfo(username, function (info) {
+        if (info === 404) {
             msg.channel.send("can't find that user")
-        } else if(utilities.findNimsesRole(info.profile.level,info.profile.status) === "don't know"){
+        } else if (utilities.findNimsesRole(info.profile.level, info.profile.status) === "don't know") {
             msg.channel.send("don't know what status you have")
-        } else{
-            var role = msg.guild.roles.find(role => role.name.toLowerCase() === utilities.findNimsesRole(info.profile.level,info.profile.status))
+        } else {
+            var role = msg.guild.roles.find(role => role.name.toLowerCase() === utilities.findNimsesRole(info.profile.level, info.profile.status))
             msg.member.addRole(role)
             msg.channel.send(`gave you the ${role.name}, role!`)
         }
