@@ -73,7 +73,7 @@ exports.posts = function (msg) {
                         .setTitle("Post: ")
                         .setAuthor("[REDACTED]#1227")
                         .setColor("#4169e1")
-                        post.photo ? embed.setImage(post.photo) : "no photo here"
+                        post.photo ? embed.setImage(post.photo) : embed.addField("Photo: ", "none")
                         .addField("text: ", post.text)
                         .setFooter("©[REDACTED]#1227")
                     msg.channel.send(embed)
