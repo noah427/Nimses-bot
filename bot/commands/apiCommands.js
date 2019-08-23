@@ -30,7 +30,7 @@ exports.user = function (msg) {
                 .addField("Visitors: ", utilities.commaSeparater(user.profile.visitors))
                 .addField("Status: ", utilities.findNimsesRole(user.profile.level, user.profile.status))
                 .addField("is a master: ", user.profile.isMaster)
-                .setFooter("©[REDACTED]#1227")
+                .setFooter("©[REDACTED]#0221")
             msg.channel.send(embed)
         }
     })
@@ -50,7 +50,7 @@ exports.limit = function (msg) {
                 .setAuthor("pikami#0050")
                 .setColor("#4169e1")
                 .addField("Nims spent/limit", `${utilities.commaSeparater(limits.amount)}/${utilities.commaSeparater(limits.limit)}`)
-                .setFooter("©[REDACTED]#1227")
+                .setFooter("©[REDACTED]#0221")
             msg.channel.send(embed)
         }
     });
@@ -71,11 +71,11 @@ exports.posts = function (msg) {
                 posts.items.forEach(function (post) {
                     var embed = new Discord.RichEmbed()
                         .setTitle("Post: ")
-                        .setAuthor("[REDACTED]#1227")
+                        .setAuthor("[REDACTED]#0221")
                         .setColor("#4169e1")
                         post.photo ? embed.setImage(post.photo) : embed.addField("Photo: ", "none")
                         .addField("text: ", post.text)
-                        .setFooter("©[REDACTED]#1227")
+                        .setFooter("©[REDACTED]#0221")
                     msg.channel.send(embed)
                 })
             }
@@ -89,7 +89,7 @@ exports.globalData = function (msg) {
     var data = nemsis.getGlobalData(function (data) {
         var embed = new Discord.RichEmbed()
             .setTitle("Global Data")
-            .setAuthor("[REDACTED]#1227")
+            .setAuthor("[REDACTED]#0221")
             .setColor("#4169e1")
             .addField("Total global nims: ", utilities.commaSeparater(data.nims))
             .addField("'Nims Delta' (don't know what this means): ", utilities.commaSeparater(data.nimsDelta))
